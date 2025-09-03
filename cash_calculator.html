@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 850px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .header {
+      background: #1e90ff;
+      color: #fff;
+      padding: 15px;
+      font-size: 32px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .sub-header {
+      background: #eaf4ff;
+      color: #333;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      border-bottom: 1px solid #d0e6ff;
+      font-style: italic;
+    }
+    .form-section {
+      padding: 20px;
+      display: grid;
+      gap: 20px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      align-items: start;
+    }
+    .grid-3 div {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .card {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+    .summary {
+      background: #f1f9ff;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #cce5ff;
+      font-size: 18px;
+    }
+    .summary div {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #cce5ff;
+    }
+    .summary div:last-child {
+      border-bottom: none;
+    }
+    .status-bar {
+      text-align: center;
+      padding: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .status-ok {
+      background: #28a745;
+      color: #fff;
+    }
+    .status-short {
+      background: #ffcccc;
+      color: #b30000;
+    }
+    .status-excess {
+      background: #cc0000;
+      color: #fff;
+    }
+    .reset-btn, .whatsapp-btn {
+      width: 100%;
+      border: none;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .reset-btn {
+      background: #ff4d4f;
+      color: #fff;
+    }
+    .reset-btn:hover {
+      background: #d9363e;
+    }
+    .whatsapp-btn {
+      background: #25d366;
+      color: #fff;
+    }
+    .whatsapp-btn:hover {
+      background: #1da851;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">Cash Calculator</div>
+    <div class="sub-header">Created by Mr. Saykat G. | All Rights Reserved</div>
+    <div class="form-section">
+      
+      <!-- Sale and Bill -->
+      <div class="grid-2">
+        <div>
+          <label>Cash Sale Amount (₹)</label>
+          <input type="number" id="sale" placeholder="Enter Sale Amount">
+        </div>
+        <div>
+          <label>Last Bill No (6 digit)</label>
+          <input type="text" id="bill" maxlength="6" placeholder="XXXXXX">
+        </div>
+      </div>
+
+      <!-- Currency  -->
+      <div class="card">
+        <label>Currency </label>
+        <div class="grid-3">
+          <div><label>₹10 </label><input type="number" id="n10" placeholder=""></div>
+          <div><label>₹20 </label><input type="number" id="n20" placeholder=""></div>
+          <div><label>₹50 </label><input type="number" id="n50" placeholder=""></div>
+          <div><label>₹100 </label><input type="number" id="n100" placeholder=""></div>
+          <div><label>₹200 </label><input type="number" id="n200" placeholder=""></div>
+          <div><label>₹500 </label><input type="number" id="n500" placeholder=""></div>
+        </div>
+      </div>
+
+      <!-- Additional + Summary -->
+      <div class="grid-2">
+        <div class="card">
+          <label>Additional</label>
+          <div><label>Coins (₹)</label><input type="number" id="coins" placeholder=""></div>
+          <div><label>Voucher Amount (₹)</label><input type="number" id="voucher" placeholder=""></div>
+          <div><label>Return Voucher Amount (₹)</label><input type="number" id="return" placeholder=""></div>
+        </div>
+
+        <div>
+          <div class="summary">
+            <div><span>Total:</span> <span id="total">₹0</span></div>
+            <div><span>Sale:</span> <span id="saleShow">₹0</span></div>
+            <div><span>Cash Difference:</span> <span id="diff">₹0</span></div>
+          </div>
+          <div id="status" class="status-bar status-ok">OK</div>
+        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="card">
+        <label>WhatsApp Number (with country code)</label>
+        <input type="text" id="whatsapp" placeholder="e.g. 9330048666">
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">Send Report on WhatsApp</button>
+      </div>
+
+      <button class="reset-btn" onclick="resetAll()">Reset All</button>
+    </div>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach(i => {
+      i.addEventListener("input", calculate);
+      i.addEventListener("focus", function() {
+        if (this.value === "0") this.value = "";
+      });
+      i.addEventListener("blur", function() {
+        if (this.value === "") this.value = "";
+      });
+    });
+
+    function calculate() {
+      let sale = parseFloat(document.getElementById("sale").value) || 0;
+      let n10 = (parseInt(document.getElementById("n10").value) || 0) * 10;
+      let n20 = (parseInt(document.getElementById("n20").value) || 0) * 20;
+      let n50 = (parseInt(document.getElementById("n50").value) || 0) * 50;
+      let n100 = (parseInt(document.getElementById("n100").value) || 0) * 100;
+      let n200 = (parseInt(document.getElementById("n200").value) || 0) * 200;
+      let n500 = (parseInt(document.getElementById("n500").value) || 0) * 500;
+      let coins = parseFloat(document.getElementById("coins").value) || 0;
+      let voucher = parseFloat(document.getElementById("voucher").value) || 0;
+      let ret = parseFloat(document.getElementById("return").value) || 0;
+
+      let total = n10 + n20 + n50 + n100 + n200 + n500 + coins + voucher + ret;
+      let diff = total - sale;
+
+      document.getElementById("total").textContent = "₹" + total;
+      document.getElementById("saleShow").textContent = "₹" + sale;
+      document.getElementById("diff").textContent = "₹" + diff;
+
+      let status = document.getElementById("status");
+      if (diff === 0) {
+        status.textContent = "✅ OK";
+        status.className = "status-bar status-ok";
+      } else if (diff < 0) {
+        status.textContent = "❌ SHORT";
+        status.className = "status-bar status-short";
+      } else {
+        status.textContent = "⚠️ EXCESS";
+        status.className = "status-bar status-excess";
+      }
+    }
+
+    function sendWhatsApp() {
+      let number = document.getElementById("whatsapp").value.trim();
+      if (!number) {
+        alert("Enter WhatsApp Number with country code (e.g. 9330048666)");
+        return;
+      }
+
+      let sale = document.getElementById("sale").value || "0";
+      let bill = document.getElementById("bill").value || "N/A";
+
+      // Note counts
+      let c500 = parseInt(document.getElementById("n500").value) || 0;
+      let c200 = parseInt(document.getElementById("n200").value) || 0;
+      let c100 = parseInt(document.getElementById("n100").value) || 0;
+      let c50  = parseInt(document.getElementById("n50").value) || 0;
+      let c20  = parseInt(document.getElementById("n20").value) || 0;
+      let c10  = parseInt(document.getElementById("n10").value) || 0;
+      let coin = parseFloat(document.getElementById("coins").value) || 0;
+
+      // Totals
+      let total = (c500*500)+(c200*200)+(c100*100)+(c50*50)+(c20*20)+(c10*10)+coin
+                  + (parseFloat(document.getElementById("voucher").value) || 0)
+                  + (parseFloat(document.getElementById("return").value) || 0);
+      let diff = total - (parseFloat(sale) || 0);
+      let status = document.getElementById("status").textContent;
+
+      // Build message
+      let message = `*Cash Domination Report*%0A` +
+                    `Cash Sale: ₹${sale}%0A` +
+                    `Last Bill No: ${bill}%0A` +
+                    `________________________________%0A`;
+
+      if (c500) message += `500*${c500} = ${c500*500}%0A`;
+      if (c200) message += `200*${c200} = ${c200*200}%0A`;
+      if (c100) message += `100*${c100} = ${c100*100}%0A`;
+      if (c50)  message += `50*${c50} = ${c50*50}%0A`;
+      if (c20)  message += `20*${c20} = ${c20*20}%0A`;
+      if (c10)  message += `10*${c10} = ${c10*10}%0A`;
+      if (coin) message += `Coin = ${coin}%0A`;
+
+      message += `________________________________%0A%0A` +
+                 `Total Cash: ₹${total}%0A` +
+                 `Difference: ₹${diff}%0A` +
+                 `Status: ${status}`;
+
+      let url = `https://wa.me/${number}?text=${message}`;
+      window.open(url, "_blank");
+    }
+
+    function resetAll() {
+      document.querySelectorAll("input").forEach(i => i.value = "");
+      document.getElementById("bill").value = "";
+      calculate();
+    }
+
+    calculate();
+  </script>
+</body>
+</html>
